@@ -1,0 +1,29 @@
+# 构建打包阶段
+FROM node:17 AS builder
+
+WORKDIR /app
+
+COPY ./data-analysis-system-server ./
+COPY ./data-analysis-system/build_server.sh ./
+
+RUN set -x \
+  && apt-get update -y \
+  && chmod +x ./build_server.sh \
+  && bash ./build_server.sh \
+  && rm -rf `ls | grep -v 'output'`
+
+
+# 输出
+FROM node:17.2.0-alpine3.14
+
+WORKDIR /app
+
+COPY --from=builder /app/output ./output
+
+RUN set -x \
+  && npm config set registry "https://registry.npmmirror.com/" \
+  && npm install pm2 -g
+
+EXPOSE 4000
+
+CMD cd output/ && pm2-runtime start app.js
