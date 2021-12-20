@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    image: data-analysis-system-web
+    ports:
+      - '80:80'
+    networks:
+      - delbury-net
+  
+  server:
+    image: data-analysis-system-server
+    ports:
+      - '4000'
+    networks:
+      - delbury-net
+
+networks:
+  delbury-net:

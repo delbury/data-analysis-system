@@ -5,7 +5,7 @@ WORKDIR /app
 
 ARG BUILD_SCRIPT='build.sh'
 
-COPY ./data-analysis-system-server ./
+COPY ./data-analysis-system-web ./
 COPY "./data-analysis-system/${BUILD_SCRIPT}" ./
 
 RUN set -x \
@@ -16,16 +16,12 @@ RUN set -x \
 
 
 # 输出
-FROM node:17.2.0-alpine3.14
+FROM nginx
 
 WORKDIR /app
 
-COPY --from=builder /app/output ./output
+COPY --from=builder /app/output ./html
+COPY "./data-analysis-system/nginx/nginx.conf" /etc/nginx/nginx.conf
+COPY "./data-analysis-system/nginx/conf.d/default.conf" /etc/nginx/conf.d
 
-RUN set -x \
-  && npm config set registry "https://registry.npmmirror.com/" \
-  && npm install pm2 -g
-
-EXPOSE 4000
-
-CMD cd output/ && pm2-runtime start app.js
+EXPOSE 80
