@@ -1,19 +1,54 @@
 version: '3'
 
 services:
+  # 前端 nginx web
   web:
     image: data-analysis-system-web
     ports:
       - '80:80'
     networks:
-      - delbury-net
-  
+      - main-net
+    depends_on:
+      - server
+  # mysql 数据库
+  mysql:
+    image: 'mysql:8'
+    ports:
+      - '3306'
+      - '33060'
+    command: 
+      - --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./mysql/lib/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456a
+      MYSQL_DATABASE: data_analysis_system
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456a
+    networks:
+      - main-net
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping"]
+      interval: 10s
+      timeout: 2s
+      retries: 10
+  # redis 数据库
+  redis:
+    image: 'redis:6'
+    ports:
+      - '6379'
+    networks:
+      - main-net
+  # 后端 server
   server:
     image: data-analysis-system-server
     ports:
       - '4000'
     networks:
-      - delbury-net
+      - main-net
+    depends_on:
+      - mysql
+      - redis
 
 networks:
-  delbury-net:
+  main-net:

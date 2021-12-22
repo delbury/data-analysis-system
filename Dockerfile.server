@@ -16,11 +16,12 @@ RUN set -x \
 
 
 # 输出
-FROM node:17.2.0-alpine3.14
+FROM node:17.3.0-alpine3.14
 
 WORKDIR /app
 
 COPY --from=builder /app/output ./output
+COPY "./data-analysis-system/server/start.config.js" ./output
 
 RUN set -x \
   && npm config set registry "https://registry.npmmirror.com/" \
@@ -28,4 +29,4 @@ RUN set -x \
 
 EXPOSE 4000
 
-CMD cd output/ && pm2-runtime start app.js
+CMD cd output/ && pm2-runtime start start.config.js

@@ -1,1 +1,4 @@
-nginx/html/*
+for-test
+mysql/lib/*
+
+.DS_Store
