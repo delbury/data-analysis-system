@@ -1,4 +1,5 @@
+.DS_Store
+
 for-test
 mysql/lib/*
-
-.DS_Store
+mysql/bak/*
