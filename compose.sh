@@ -3,4 +3,5 @@
 docker-compose -f=./docker-compose.yml \
   -p=data-analysis-system \
   up \
-  --force-recreate
+  --force-recreate \
+  -d
