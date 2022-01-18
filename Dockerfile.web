@@ -9,6 +9,7 @@ COPY ./data-analysis-system-web ./
 COPY "./data-analysis-system/${BUILD_SCRIPT}" ./
 
 RUN set -x \
+  && sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
   && apt-get update -y \
   && chmod +x "./${BUILD_SCRIPT}" \
   && bash "./${BUILD_SCRIPT}" \
