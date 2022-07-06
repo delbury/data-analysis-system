@@ -3,3 +3,5 @@
 for-test
 mysql/lib/*
 mysql/bak/*
+tools/download/*
+tools/build
