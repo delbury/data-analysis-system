@@ -1,2 +1,4 @@
-APP_NAME="data-analysis-system-task"
+#!/bin/bash
+
+APP_NAME="system-task"
 APP_PATH="./build/${APP_NAME}"
