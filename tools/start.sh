@@ -12,4 +12,4 @@ chmod a+x ${APP_PATH}
 source ./stop.sh
 
 # 启动
-${APP_PATH} &
+nohup ${APP_PATH} 1>./build/nohup.out &
