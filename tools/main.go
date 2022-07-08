@@ -6,7 +6,7 @@ import (
 )
 
 // 请求 host
-const HOST = "http://127.0.0.1:4000"
+const HOST = "http://127.0.0.1"
 const URL_PATH = "/api/env/backup"
 const DOWNLOAD_DIR = "./download/"
 
